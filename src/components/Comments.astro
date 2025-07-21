@@ -1,5 +1,5 @@
 ---
-// 这是评论区组件的最终版本
+// 这是评论区组件的终极版本，加入了双重保险！
 ---
 
 <!-- 1. 引入 Valine 的核心脚本 -->
@@ -10,20 +10,28 @@
 
 <!-- 
   3. 初始化 Valine 的脚本。
-  我们把初始化代码放进一个事件监听器里，
-  确保它在整个页面都加载完毕、并且 Astro 的页面切换动画完成后才运行。
-  这样就能保证 #vcomments 这个元素一定存在，也能避免和其他脚本打架。
+  我们现在监听两个信号：
+  - 'astro:page-load': 负责第一次打开页面时加载。
+  - 'swup:pageView': 负责在用动画切换页面后重新加载，这是专门对付这个模板的终极武器！
 -->
 <script is:inline>
   function initValine() {
-    // 检查 Valine 是否已经初始化，防止重复加载
-    // 如果已经有 .vwrap 元素，说明 Valine 已经渲染了，就不用再执行了
-    if (document.querySelector('#vcomments .vwrap')) {
+    // 秘密日志，帮我们看到代码有没有在运行
+    console.log("开始尝试召唤评论区...");
+
+    const el = document.querySelector('#vcomments');
+    if (!el) {
+      console.log("召唤失败：没找到安放评论区的#vcomments位置。");
       return;
     }
     
-    // 检查 Valine 函数是否存在
+    if (el.querySelector('.vwrap')) {
+      console.log("评论区已经在了，不用重复召唤。");
+      return;
+    }
+    
     if (typeof Valine === 'function') {
+      console.log("找到了Valine魔法书，开始施法！");
       new Valine({
         el: '#vcomments',
         appId: 'XVu5uGyeWQCUayGYC0wwlg1B-gzGzoHsz',
@@ -32,9 +40,13 @@
         avatar: 'wavatar',
         visitor: true,
       });
+      console.log("施法完毕！");
+    } else {
+      console.log("召唤失败：Valine魔法书还没送到。");
     }
   }
 
-  // 监听 Astro 的页面加载事件，这是最稳妥的方式
+  // 双重保险！同时监听两个信号！
   document.addEventListener('astro:page-load', initValine);
+  document.addEventListener('swup:pageView', initValine);
 </script>
