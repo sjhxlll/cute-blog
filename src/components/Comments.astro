@@ -1,18 +1,18 @@
 ---
-// 这个文件是评论区组件
+// 这是一个用来测试的组件
 ---
 
-<script src="https://unpkg.com/valine/dist/Valine.min.js"></script>
-
-<div id="vcomments" class="mx-auto my-16 max-w-4xl px-4"></div>
-
-<script is:inline>
-  new Valine({
-    el: '#vcomments',
-    appId: 'XVu5uGyeWQCUayGYC0wwlg1B-gzGzoHsz',
-    appKey: '2nw7sXBAhUf4SimNycb3lmoL',
-    placeholder: '有什么问题欢迎评论区留言~么么哒',
-    avatar: 'wavatar', // 头像风格
-    visitor: true, // 开启访问量统计
-  });
-</script>
+<div style="
+  margin: 4rem auto;
+  padding: 2rem;
+  max-width: 64rem;
+  background-color: #ffdde1; /* 一个可爱的粉色背景 */
+  border: 2px dashed #f06292; /* 粉色的虚线边框 */
+  border-radius: 1rem;
+  text-align: center;
+  font-family: sans-serif;
+">
+  <h2 style="font-size: 1.5rem; color: #c2185b; margin-top: 0;">🕵️ 评论区探针 🕵️</h2>
+  <p style="color: #ad1457;">如果你能看到这个粉色的盒子，就说明评论组件的位置是对的！</p>
+  <p style="color: #ad1457;">请告诉 Gemini，你看到了这个盒子哦~</p>
+</div>
