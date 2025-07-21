@@ -9,21 +9,12 @@ import { getSortedPosts } from "../utils/content-utils";
 export const getStaticPaths = (async ({ paginate }) => {
 	const allBlogPosts = await getSortedPosts();
 
-	// --- 🕵️ 间谍代码开始 🕵️ ---
-	// 我们在这里循环检查每一篇文章
-	for (const post of allBlogPosts) {
-		// 找到我们想调查的那篇《Include Video in the Posts》
-		if (post.data.title.includes("Video")) {
-			// 把它的标题改成一份“情报报告”
-			post.data.title = `[情报] unlisted 的值是: ${post.data.unlisted}，类型是: ${typeof post.data.unlisted}`;
-		}
-	}
-	// --- 🕵️ 间谍代码结束 🕵️ ---
-
+	// --- 最终的魔法！只在这里筛选用于首页的文章 ---
 	const postsForHomepage = allBlogPosts.filter(post => post.data.unlisted !== true);
 
 	return paginate(postsForHomepage, { pageSize: PAGE_SIZE });
 }) satisfies GetStaticPaths;
+// https://github.com/withastro/astro/issues/6507#issuecomment-1489916992
 
 const { page } = Astro.props;
 
