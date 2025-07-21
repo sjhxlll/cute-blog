@@ -3,7 +3,7 @@ title: 郊狼好玩呢～
 published: 2025-07-21
 description: 郊狼项目及感受
 image: ./cover.jpg   # 如果有封面图，需要先把图片也传到这个目录下
-tags: [心情, 日记]
+tags: [玩具, 郊狼]
 category: 生活
 draft: false
 ---
