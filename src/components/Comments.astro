@@ -1,18 +1,40 @@
 ---
-// 这是一个用来测试的组件
+// 这是评论区组件的最终版本
 ---
 
-<div style="
-  margin: 4rem auto;
-  padding: 2rem;
-  max-width: 64rem;
-  background-color: #ffdde1; /* 一个可爱的粉色背景 */
-  border: 2px dashed #f06292; /* 粉色的虚线边框 */
-  border-radius: 1rem;
-  text-align: center;
-  font-family: sans-serif;
-">
-  <h2 style="font-size: 1.5rem; color: #c2185b; margin-top: 0;">🕵️ 评论区探针 🕵️</h2>
-  <p style="color: #ad1457;">如果你能看到这个粉色的盒子，就说明评论组件的位置是对的！</p>
-  <p style="color: #ad1457;">请告诉 Gemini，你看到了这个盒子哦~</p>
-</div>
+<!-- 1. 引入 Valine 的核心脚本 -->
+<script src="https://unpkg.com/valine/dist/Valine.min.js"></script>
+
+<!-- 2. 这是 Valine 评论区要显示的位置 -->
+<div id="vcomments" class="mx-auto my-16 max-w-4xl px-4"></div>
+
+<!-- 
+  3. 初始化 Valine 的脚本。
+  我们把初始化代码放进一个事件监听器里，
+  确保它在整个页面都加载完毕、并且 Astro 的页面切换动画完成后才运行。
+  这样就能保证 #vcomments 这个元素一定存在，也能避免和其他脚本打架。
+-->
+<script is:inline>
+  function initValine() {
+    // 检查 Valine 是否已经初始化，防止重复加载
+    // 如果已经有 .vwrap 元素，说明 Valine 已经渲染了，就不用再执行了
+    if (document.querySelector('#vcomments .vwrap')) {
+      return;
+    }
+    
+    // 检查 Valine 函数是否存在
+    if (typeof Valine === 'function') {
+      new Valine({
+        el: '#vcomments',
+        appId: 'XVu5uGyeWQCUayGYC0wwlg1B-gzGzoHsz',
+        appKey: '2nw7sXBAhUf4SimNycb3lmoL',
+        placeholder: '有什么问题欢迎评论区留言~么么哒',
+        avatar: 'wavatar',
+        visitor: true,
+      });
+    }
+  }
+
+  // 监听 Astro 的页面加载事件，这是最稳妥的方式
+  document.addEventListener('astro:page-load', initValine);
+</script>
