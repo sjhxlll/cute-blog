@@ -6,8 +6,7 @@ import { getCategoryUrl } from "@utils/url-utils.ts";
 // // Retrieve posts and sort them by publication date
 async function getRawSortedPosts() {
 	const allBlogPosts = await getCollection("posts", ({ data }) => {
-		// --- 就是这里！我们在这里加上了 unlisted 的判断 ---
-		return import.meta.env.PROD ? (data.draft !== true && data.unlisted !== true) : true;
+		return import.meta.env.PROD ? data.draft !== true : true;
 	});
 
 	const sorted = allBlogPosts.sort((a, b) => {
