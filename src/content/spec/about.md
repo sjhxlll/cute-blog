@@ -13,5 +13,20 @@
 - 长相厮守
 - 争取早日做出一个看得过去的博客
 ##联系方式
-- 邮箱：a@aidoi.de
+- 邮箱：<a class="transition link text-[var(--primary)] font-medium" target="_blank" href="mailto:a@aidoi.de">a@aidoi.de</a>
 - GitHub：<a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/sjhxlll">github</a>
+
+# 英语版
+This is my first blog in google.Let's try it.
+
+About me ,I like reading lite novels,listening music,wahching streaming media,read illustration and more.I am a gay,but I don't hate my choice.
+
+ Xagunel,my english name,which is translate by my chinese name“遐观”.
+
+In internet,I study linux,vps,learn many different points in the world,get many free service.
+
+In my dream,I want to get more and more money,have a long and free trips,have nice lover forever.In a small contry,with a lovely person,live out my life peacefully.
+
+Let's do better and have better future.
+
+ 
