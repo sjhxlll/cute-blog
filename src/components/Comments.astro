@@ -1,0 +1,18 @@
+---
+// 这个文件是评论区组件
+---
+
+<script src="https://unpkg.com/valine/dist/Valine.min.js"></script>
+
+<div id="vcomments" class="mx-auto my-16 max-w-4xl px-4"></div>
+
+<script is:inline>
+  new Valine({
+    el: '#vcomments',
+    appId: 'XVu5uGyeWQCUayGYC0wwlg1B-gzGzoHsz',
+    appKey: '2nw7sXBAhUf4SimNycb3lmoL',
+    placeholder: '有什么问题欢迎评论区留言~么么哒',
+    avatar: 'wavatar', // 头像风格
+    visitor: true, // 开启访问量统计
+  });
+</script>
