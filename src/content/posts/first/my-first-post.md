@@ -7,7 +7,6 @@ tags: [心情, 日记]
 category: 生活
 draft: false
 ---
-
-这里是你的正文内容，用 Markdown 语法写哦~
+这是我的第一篇文章，好开心呀！
 
 Hello World! 我是小可爱！
