@@ -7,7 +7,7 @@ tags: [玩具, 郊狼]
 category: 生活
 draft: false
 ---
-开源项目：
+## 开源项目
 
 1. <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/sjhxlll">监听鼠标事件进行电击</a>
 
@@ -20,7 +20,13 @@ draft: false
 以上都是可以简单入门的项目，不需要什么操作。
 
 波形集合分享：
-
-GitHub：https://github.com/sjhxlll/dg-lab-waveform-collection
+<a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/sjhxlll/dg-lab-waveform-collection">GitHub</a>
 
 打开 DG-LAB，点击软件的右上角的设置中，选择波形导入，选中波形文件，就可以解析选择波形，玩耍了呢。
+
+## 感受
+看地方和波形。我觉得性敏感的地方都比较刺激。
+大腿内侧麻的感觉更重。
+胸口感受不大，我怕电流经过心脏，所以电流开的比较小，乳夹夹的感受更重，夹久了有点刺痛和敏感。
+没感受到很刺激的高潮，可能我不习惯这种持续性的刺激吧，比较喜欢瞬发的、比如射精这种高潮。
+前列腺高潮还没弄到过，琢磨后穴实在是太累了，要做的前戏也比较多。
