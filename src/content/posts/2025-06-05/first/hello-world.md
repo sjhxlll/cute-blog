@@ -2,7 +2,7 @@
 title: 6月5日的思考
 published: 2025-06-05
 description: 6月5日的思考
-image: ./cover.jpg   # 如果有封面图，需要先把图片也传到这个目录下
+image: ./cover.png   # 如果有封面图，需要先把图片也传到这个目录下
 tags: [心情, 日记]
 category: 生活
 draft: false
