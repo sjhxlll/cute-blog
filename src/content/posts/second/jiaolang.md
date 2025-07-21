@@ -9,13 +9,13 @@ draft: false
 ---
 开源项目：
 
-1. 监听鼠标事件进行电击： [lxyddice / DGLabMouseListener](https://github.com/lxyddice/DGLabMouseListener).
+1. <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/sjhxlll">监听鼠标事件进行电击</a>
 
-2.VSCode 可自定义的郊狼联动插件： [lxyddice / DGLabVSCode](https://github.com/lxyddice/DGLabVSCode).
+2. <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/sjhxlll">VSCode 可自定义的郊狼联动插件</a>
 
-3. 多邻国学习助手： [klxf / Duolingo-Coyote-Assistant](https://github.com/klxf/Duolingo-Coyote-Assistant).
+3. <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/sjhxlll">多邻国学习助手</a>
 
-4. 郊狼游戏控制器： [hyperzlib / DG-Lab-Coyote-Game-Hub](https://github.com/hyperzlib/DG-Lab-Coyote-Game-Hub).
+4. <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/sjhxlll">郊狼游戏控制器</a>
 
 以上都是可以简单入门的项目，不需要什么操作。
 
