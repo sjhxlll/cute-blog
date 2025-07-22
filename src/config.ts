@@ -30,13 +30,23 @@ export const siteConfig: SiteConfig = {
 		depth: 2, // Maximum heading depth to show in the table, from 1 to 3
 	},
 	favicon: [
-		// Leave this array empty to use the default favicon
-		 //{
-		   //src: '/favicon/fav.jpg',    // Path of the favicon, relative to the /public directory
-		   //theme: 'light',              // (Optional) Either 'light' or 'dark', set only if you have different favicons for light and dark mode
-		   //sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
-		 //}
-		],
+		{
+			src: "/favicon/fav-32.png",
+			sizes: "32x32",
+		},
+		{
+			src: "/favicon/fav-128.png",
+			sizes: "128x128",
+		},
+		{
+			src: "/favicon/fav-180.png",
+			sizes: "180x180",
+		},
+		{
+			src: "/favicon/fav-192.png",
+			sizes: "192x192",
+		},
+	],
 };
 
 export const navBarConfig: NavBarConfig = {
@@ -47,7 +57,7 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Friends,  
 		{
 			name: "GitHub",
-			url: "https://github.com/sjhxlll", // Internal links should not include the base path, as it is automatically added
+			url: "https://github.com/", // Internal links should not include the base path, as it is automatically added
 			external: true, // Show an external link icon and will open in a new tab
 		},
 	],

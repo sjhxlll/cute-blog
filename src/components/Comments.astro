@@ -1,25 +1,27 @@
-<head>
-  <!-- ... -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/@waline/client@v3/dist/waline.css"
-  />
-  <!-- ... -->
-</head>
-<body>
-  <!-- ... -->
-  <div id="waline"></div>
-  <script type="module">
-    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+---
+interface Props {
+	path: string;
+}
 
-    init({
-      el: '#waline',
-      serverURL: 'https://my-waline-server-psi.vercel.app/',
-      emoji: [
-      '//unpkg.com/@waline/emojis@1.2.0/weibo',
-      '//unpkg.com/@waline/emojis@1.2.0/bmoji',
-      '//unpkg.com/@waline/emojis@1.2.0/bilibili',
-     ],
-    });
-  </script>
-</body>
+const config = {
+	el: "#comment",
+	path: Astro.props.path,
+};
+---
+
+<div id="comment"></div>
+<script is:inline defer define:vars={{ config }}>
+	function loadTwikoo() {
+		const script = document.createElement("script");
+		script.src = "https://cdnjs.cloudflare.com/ajax/libs/twikoo/1.6.44/twikoo.min.js"
+		script.onload = () => {
+			twikoo.init({
+				...config,
+				envId: "https://twikoo.aidoi.top",
+				lang: "zh-CN",
+			});
+		};
+		document.body.appendChild(script);
+	}
+	document.addEventListener("loadComment", loadTwikoo, { once: true });
+</script>
