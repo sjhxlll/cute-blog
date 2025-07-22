@@ -1,5 +1,5 @@
 ---
-// 这是全新的、强大的、带有“双核驱动”和“强制命令”的 Waline 评论组件！
+// 这是全新的、强大的、带有“唯一总司令”和“绝对命令”的 Waline 评论组件！
 ---
 
 <!-- 1. 这是 Waline 评论区要显示的位置 -->
@@ -7,14 +7,14 @@
 
 <!-- 2. 我们把所有魔法都集中在这个脚本里 -->
 <script is:inline>
-  // 我们创建一个变量来保存 Waline 实例，方便管理
-  let walineInstance = null;
+  // 我们在 window 这个“司令部”里，任命一个“总司令”来管理评论区
+  // 这样不管有多少克隆人，它们都听同一个总司令的
+  window.walineInstance = null;
 
-  // 这是我们召唤评论区的“绝对命令”函数
-  const initWaline = () => {
-    // 先检查一下，如果评论区已经在了，就不用重复召唤了
+  // 这是“总司令”的作战计划，它确保每次行动都完美无缺
+  const mountWaline = () => {
     const walineEl = document.querySelector('#waline');
-    if (!walineEl) return; // 如果连位置都找不到，就直接放弃
+    if (!walineEl) return; // 如果战场都找不到，就原地待命
 
     // 动态加载 Waline 的脚本和样式，这是最稳妥的方式
     Promise.all([
@@ -32,19 +32,21 @@
         }
       })
     ]).then(([{ init }]) => {
-      // 销毁旧的实例，确保每次都是全新的
-      if (walineInstance) {
-        walineInstance.destroy();
+      // 行动前，先让旧的部队（如果存在）光荣退役，确保战场干净
+      if (window.walineInstance) {
+        window.walineInstance.destroy();
       }
       
-      console.log("Waline 脚本和样式已准备就绪，开始初始化...");
-      
-      // 初始化 Waline，并把新实例保存起来
-      walineInstance = init({
+      // 派出全新的部队，占领阵地！
+      window.walineInstance = init({
         el: '#waline',
         // ↓↓↓ 请再次确认这里的地址是你自己的 Waline 服务器地址！ ↓↓↓
         serverURL: 'https://your-waline-server.vercel.app',
         
+        // --- 这行是新的秘密武器！---
+        // 告诉每一支部队，它守护的是哪片独一无二的领土（文章路径）
+        path: window.location.pathname,
+
         // --- 个性化配置 ---
         lang: 'zh-CN',
         reaction: true,
@@ -58,12 +60,11 @@
     }).catch(e => console.error('加载或初始化 Waline 失败:', e));
   };
 
-  // --- 双核驱动！给两个大脑同时下达最高指令！---
-
-  // 指令一：给“Astro大脑”下令，负责第一次加载！
-  document.addEventListener('astro:page-load', initWaline);
-  
-  // 指令二：给“Swup动画大脑”下令，负责后续的页面切换！
-  document.addEventListener('swup:pageView', initWaline);
-
+  // --- “总司令部”只下达一次命令，防止克隆人军队混乱！ ---
+  // 我们用一个旗帜来标记，确保命令只被设置一次
+  if (!window.walineListenersAdded) {
+    document.addEventListener('astro:page-load', mountWaline);
+    document.addEventListener('swup:pageView', mountWaline);
+    window.walineListenersAdded = true;
+  }
 </script>
