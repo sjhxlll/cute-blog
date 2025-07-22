@@ -1,47 +1,26 @@
 ---
-// 这是全新的、强大的、带有“专车接送”服务的 Waline 评论组件！
+// 这是全新的、强大的、带有“强制命令”的 Waline 评论组件！
 ---
 
-<!-- 1. 我们不再需要在这里预先加载样式，脚本会自动处理 -->
-
-<!-- 2. 这是 Waline 评论区要显示的位置 -->
+<!-- 1. 这是 Waline 评论区要显示的位置 -->
 <div id="waline" class="mx-auto my-16 max-w-4xl px-4"></div>
 
+<!-- 2. 我们把所有魔法都集中在这个脚本里 -->
 <script is:inline>
-  // 我们把初始化函数放在一个变量里，防止重复定义
-  let walineInstance = null;
-
-  async function initializeWaline() {
-    console.log("Waline: 监听到页面加载信号，准备召唤评论区...");
-    const el = document.querySelector('#waline');
-
-    if (!el) {
-      console.error("Waline 错误: 没找到安放评论区的 #waline 位置。");
+  // 我们创建一个函数，专门负责“召唤”评论区
+  const initWaline = () => {
+    // 先检查一下，如果评论区已经在了，就不用重复召唤了
+    if (document.querySelector('#waline .wl-root')) {
       return;
     }
 
-    // 如果已经有实例，先销毁，确保每次都是新的
-    if (walineInstance) {
-      console.log("Waline: 销毁旧的评论区实例...");
-      walineInstance.destroy();
-      walineInstance = null;
-    }
-    
-    // 清空容器，确保干净
-    el.innerHTML = '';
-
-    try {
-      // --- 魔法在这里！我们派“私人司机”(await import)去接脚本 ---
-      // 司机会一直等到脚本上车，我们再继续
-      console.log("Waline: 正在等待评论区脚本上车...");
-      const { init } = await import('https://unpkg.com/@waline/client@v3/dist/waline.js');
-      console.log("Waline: 脚本已上车！开始初始化...");
-
-      // 初始化 Waline，并把实例存起来
-      walineInstance = init({
+    // 动态加载 Waline 的脚本，这样最灵活
+    import('https://unpkg.com/@waline/client@v3/dist/waline.js').then(({ init }) => {
+      console.log("Waline 脚本已加载，开始初始化...");
+      init({
         el: '#waline',
         // ↓↓↓ 请再次确认这里的地址是你自己的 Waline 服务器地址！ ↓↓↓
-        serverURL: 'https://your-waline-server.vercel.app', 
+        serverURL: 'https://your-waline-server.vercel.app',
         
         // --- 个性化配置 ---
         lang: 'zh-CN',
@@ -53,13 +32,20 @@
         ],
         dark: 'html.dark',
       });
-      console.log("Waline: 初始化成功！");
-    } catch (e) {
-      console.error("Waline: 初始化时发生致命错误:", e);
-    }
-  }
+    }).catch(e => console.error('加载 Waline 失败:', e));
+  };
 
-  // --- 监听信号，保持不变 ---
-  document.addEventListener('astro:page-load', initializeWaline);
-  document.addEventListener('swup:pageView', initializeWaline);
+  // --- 强制命令来了！---
+  // 命令一：当页面切换动画（Swup）完成时，必须召唤评论区！
+  document.addEventListener('swup:pageView', initWaline);
+
+  // 命令二：当整个网页第一次加载完成时（不管有没有动画），也必须召唤评论区！
+  // 我们用一个延时来确保万无一失，给页面上其他元素一点反应时间
+  if (document.readyState === 'complete') {
+    setTimeout(initWaline, 100);
+  } else {
+    window.addEventListener('load', () => {
+      setTimeout(initWaline, 100);
+    });
+  }
 </script>
