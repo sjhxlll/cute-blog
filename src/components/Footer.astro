@@ -1,25 +1,13 @@
 ---
-// --- 前端配置区 ---
-// 这里是页面的“大脑”，我们在这里准备好需要用到的信息
-
 import { profileConfig } from '../config'
 import { url } from '../utils/url-utils'
-
-// 获取当前年份，让版权信息永远都是最新的
 const currentYear = new Date().getFullYear()
-
-// 宝贝！把你的网站开始运行的日期和时间放在这里哦
-// 我把它改成了更标准的格式 "年-月-日T时:分:秒"，这样就不会出错了
-const siteStartDate = "2025-07-21T16:58:58";
 ---
 
-<!-- --- 页面显示区 --- -->
-<!-- 这里是页面的“身体”，也就是我们看到的样子 -->
-
-<!-- 分割线，让页面布局更清晰~ -->
+<!-- 分割线 -->
 <div class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32"></div>
 
-<!-- 这是整个页脚的大容器 -->
+<!-- 页脚容器 -->
 <div class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6">
     
     <!-- 版权和链接信息 -->
@@ -32,60 +20,30 @@ const siteStartDate = "2025-07-21T16:58:58";
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://astro.build">Astro</a> &
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a>
         <br>
+        <!-- 我把这里那个多余的"+"号拿掉了 -->
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://beian.miit.gov.cn/"> 
-          萌次元备537555号-1
-        </a>   
+          萌次元备537555号-1</a>   
     </div>
 
-    <!-- 显示网站运行时间的段落 -->
-    <div class="transition text-50 text-sm text-center mt-2">
-        <p id="runningtime">正在加载运行时间...</p>
-    </div>
-</div>
+    <!-- 显示运行时间的段落，脚本会在这里填上内容 -->
+    <div class="transition text-50 text-sm text-center"><p id="runningtime"> </p></div>
 
-<!-- --- 魔法脚本区 --- -->
-<!-- 这段脚本会让时间动起来！ -->
-<script define:vars={{ siteStartDate }}>
-    // 我们让脚本乖乖地等页面完全加载好再运行
-    // 就像做好了万全的准备，才能闪亮登场嘛！
-    document.addEventListener('DOMContentLoaded', function() {
-        const timeElement = document.getElementById("runningtime");
-
-        // 如果能找到显示时间的元素...
-        if (timeElement) {
-            const startDate = new Date(siteStartDate);
-
-            // 再次确认一下日期是不是对的
-            if (isNaN(startDate.getTime())) {
-                timeElement.textContent = '哎呀，时间设置好像有点问题哦~';
-                console.error("无效的日期格式:", siteStartDate); // 给懂技术的宝贝留个线索
-                return;
+    <!-- 这是你原来的脚本，我只是把它从上面移到了这里 -->
+    <script type="text/javascript">
+        function runtime(){
+            const t=new Date("07/21/2025 16:58:58");
+            const n=new Date;
+            const s=n-t;
+            const e=Math.floor(s/1e3);
+            const o=Math.floor(e/86400);
+            const i=Math.floor(e%86400/3600);
+            const a=Math.floor(e%3600/60);
+            const r=e%60;
+            const runningTimeElement = document.getElementById("runningtime");
+            if (runningTimeElement) {
+                 runningTimeElement.innerHTML=`⭐本站已运行: ${o}天${i}小时${a}分${r}秒 ☁️`;
             }
-
-            function updateRuntime() {
-                const nowDate = new Date();
-                const totalSeconds = Math.floor((nowDate - startDate) / 1000);
-                
-                if (totalSeconds < 0) {
-                    timeElement.innerHTML = "❤️ 网站即将上线，敬请期待...";
-                    return;
-                }
-
-                const days = Math.floor(totalSeconds / 86400);
-                const hours = Math.floor((totalSeconds % 86400) / 3600);
-                const minutes = Math.floor((totalSeconds % 3600) / 60);
-                const seconds = totalSeconds % 60;
-
-                timeElement.innerHTML = `⭐本站已运行: ${days}天${hours}小时${minutes}分${seconds}秒☁️`;
-            }
-
-            // 立刻更新一次，然后每秒都更新
-            updateRuntime();
-            setInterval(updateRuntime, 1000);
-        } else {
-            // 如果找不到元素，也在控制台说一声
-            console.error("哎呀，没找到ID是 'runningtime' 的元素。");
         }
-    });
-</script>
-
+        setInterval(runtime,1000);
+    </script>
+</div>
