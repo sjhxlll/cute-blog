@@ -1,5 +1,5 @@
 ---
-// 这是全新的、强大的、带有“绝对命令”和“智能判断”功能的 Waline 评论组件！
+// 这是全新的、强大的、带有“双核驱动”和“强制命令”的 Waline 评论组件！
 ---
 
 <!-- 1. 这是 Waline 评论区要显示的位置 -->
@@ -58,16 +58,12 @@
     }).catch(e => console.error('加载或初始化 Waline 失败:', e));
   };
 
-  // --- 绝对命令来了！---
+  // --- 双核驱动！给两个大脑同时下达最高指令！---
 
-  // 命令一：当页面切换动画（Swup）完成时，必须召唤评论区！
+  // 指令一：给“Astro大脑”下令，负责第一次加载！
+  document.addEventListener('astro:page-load', initWaline);
+  
+  // 指令二：给“Swup动画大脑”下令，负责后续的页面切换！
   document.addEventListener('swup:pageView', initWaline);
 
-  // 命令二：当整个网页第一次加载完成时（不管有没有动画），也必须召唤评论区！
-  // 我们不再用延时，而是用更可靠的 DOMContentLoaded 事件
-  if (document.readyState !== 'loading') {
-    initWaline();
-  } else {
-    document.addEventListener('DOMContentLoaded', initWaline);
-  }
 </script>
