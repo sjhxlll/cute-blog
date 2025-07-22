@@ -1,5 +1,5 @@
 ---
-// 这是全新的、强大的、带有“强制命令”和“自动穿衣”功能的 Waline 评论组件！
+// 这是全新的、强大的、带有“绝对命令”和“智能判断”功能的 Waline 评论组件！
 ---
 
 <!-- 1. 这是 Waline 评论区要显示的位置 -->
@@ -7,27 +7,40 @@
 
 <!-- 2. 我们把所有魔法都集中在这个脚本里 -->
 <script is:inline>
-  // 我们创建一个函数，专门负责“召唤”评论区
+  // 我们创建一个变量来保存 Waline 实例，方便管理
+  let walineInstance = null;
+
+  // 这是我们召唤评论区的“绝对命令”函数
   const initWaline = () => {
     // 先检查一下，如果评论区已经在了，就不用重复召唤了
-    if (document.querySelector('#waline .wl-root')) {
-      return;
-    }
+    const walineEl = document.querySelector('#waline');
+    if (!walineEl) return; // 如果连位置都找不到，就直接放弃
 
-    // --- 魔法在这里！我们先给它穿上衣服！---
-    // 检查一下是不是已经穿过衣服了，没有的话就穿上
-    if (!document.querySelector('link[href*="waline.css"]')) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = 'https://unpkg.com/@waline/client@v3/dist/waline.css';
-      document.head.appendChild(link);
-      console.log("Waline: 已为评论区穿上新衣服！");
-    }
-
-    // 动态加载 Waline 的脚本，这样最灵活
-    import('https://unpkg.com/@waline/client@v3/dist/waline.js').then(({ init }) => {
-      console.log("Waline 脚本已加载，开始初始化...");
-      init({
+    // 动态加载 Waline 的脚本和样式，这是最稳妥的方式
+    Promise.all([
+      import('https://unpkg.com/@waline/client@v3/dist/waline.js'),
+      // 动态加载 CSS
+      new Promise(resolve => {
+        if (!document.querySelector('link[href*="waline.css"]')) {
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = 'https://unpkg.com/@waline/client@v3/dist/waline.css';
+          link.onload = resolve;
+          document.head.appendChild(link);
+        } else {
+          resolve();
+        }
+      })
+    ]).then(([{ init }]) => {
+      // 销毁旧的实例，确保每次都是全新的
+      if (walineInstance) {
+        walineInstance.destroy();
+      }
+      
+      console.log("Waline 脚本和样式已准备就绪，开始初始化...");
+      
+      // 初始化 Waline，并把新实例保存起来
+      walineInstance = init({
         el: '#waline',
         // ↓↓↓ 请再次确认这里的地址是你自己的 Waline 服务器地址！ ↓↓↓
         serverURL: 'https://your-waline-server.vercel.app',
@@ -42,20 +55,19 @@
         ],
         dark: 'html.dark',
       });
-    }).catch(e => console.error('加载 Waline 失败:', e));
+    }).catch(e => console.error('加载或初始化 Waline 失败:', e));
   };
 
-  // --- 强制命令来了！---
+  // --- 绝对命令来了！---
+
   // 命令一：当页面切换动画（Swup）完成时，必须召唤评论区！
   document.addEventListener('swup:pageView', initWaline);
 
   // 命令二：当整个网页第一次加载完成时（不管有没有动画），也必须召唤评论区！
-  // 我们用一个延时来确保万无一失，给页面上其他元素一点反应时间
-  if (document.readyState === 'complete') {
-    setTimeout(initWaline, 100);
+  // 我们不再用延时，而是用更可靠的 DOMContentLoaded 事件
+  if (document.readyState !== 'loading') {
+    initWaline();
   } else {
-    window.addEventListener('load', () => {
-      setTimeout(initWaline, 100);
-    });
+    document.addEventListener('DOMContentLoaded', initWaline);
   }
 </script>
