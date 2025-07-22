@@ -7,10 +7,22 @@ tags: [测试]
 category: 测试
 draft: true
 ---
-import SimpleTest from '@/components/SimpleTest.svelte';
+// 1. 在文章顶部，像写代码一样导入你刚刚创建的组件
+import TipBox from '@/components/TipBox.astro';
 
-# MDX 功能测试页面
+# 欢迎来到我的新世界！
 
-如果下面出现一个粉红色的方块，就说明我们的 MDX 配置是完全正常的！
+这是一些普通的 Markdown 文本，和以前写起来一模一样。
 
-<SimpleTest client:load />
+## 看看我的新玩具！
+
+下面这个就是一个普通的引用：
+> 这是普通引用的样子，有点单调哦。
+
+现在，见证奇迹的时刻！
+
+<TipBox>
+  嘻嘻，这是一个用 **MDX** 和 **Astro 组件** 实现的超可爱提示框！是不是感觉文章都变得生动起来了？你还可以在里面用 **Markdown** 语法哦！
+</TipBox>
+
+是不是超简单！你现在可以随心所欲地在文章任何地方使用 `<TipBox>` 了。
