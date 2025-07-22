@@ -1,6 +1,6 @@
 ---
 title: 7月22日碎碎叨
-published: 2025-07-022
+published: 2025-07-22
 description: 0722feel
 image: ./cover.png   # 如果有封面图，需要先把图片也传到这个目录下
 tags: [心情, 日记]
