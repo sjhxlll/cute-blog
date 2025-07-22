@@ -9,9 +9,8 @@ import { url } from '../utils/url-utils'
 const currentYear = new Date().getFullYear()
 
 // 宝贝！把你的网站开始运行的日期和时间放在这里哦
-// 格式是 "月/日/年 时:分:秒"，比如 "07/21/2025 16:58:58"
-// 以后想改的话，直接在这里改就好啦，超级方便！
-const siteStartDate = "07/21/2025 16:58:58";
+// 我把它改成了更标准的格式 "年-月-日T时:分:秒"，这样就不会出错了
+const siteStartDate = "2025-07-21T16:58:58";
 ---
 
 <!-- --- 页面显示区 --- -->
@@ -33,7 +32,6 @@ const siteStartDate = "07/21/2025 16:58:58";
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://astro.build">Astro</a> &
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a>
         <br>
-        <!-- 修正了一个小小的语法问题，让链接正常工作 -->
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://beian.miit.gov.cn/"> 
           萌次元备537555号-1
         </a>   
@@ -48,43 +46,46 @@ const siteStartDate = "07/21/2025 16:58:58";
 <!-- --- 魔法脚本区 --- -->
 <!-- 这段脚本会让时间动起来！ -->
 <script define:vars={{ siteStartDate }}>
-    // 找到要显示时间的那个元素
-    const timeElement = document.getElementById("runningtime");
+    // 我们让脚本乖乖地等页面完全加载好再运行
+    // 就像做好了万全的准备，才能闪亮登场嘛！
+    document.addEventListener('DOMContentLoaded', function() {
+        const timeElement = document.getElementById("runningtime");
 
-    // 确认一下我们找到了这个元素
-    if (timeElement) {
-        // 把我们之前设置的开始时间字符串，变成一个真正的日期对象
-        const startDate = new Date(siteStartDate);
+        // 如果能找到显示时间的元素...
+        if (timeElement) {
+            const startDate = new Date(siteStartDate);
 
-        // 创建一个函数，专门用来更新时间显示
-        function updateRuntime() {
-            // 获取现在的日期和时间
-            const nowDate = new Date();
-            
-            // 计算从开始到现在，一共过去了多少秒
-            const totalSeconds = Math.floor((nowDate - startDate) / 1000);
-            
-            // 如果时间还没到，就显示一个可爱的小提示
-            if (totalSeconds < 0) {
-                timeElement.innerHTML = "❤️ 网站即将上线，敬请期待...";
+            // 再次确认一下日期是不是对的
+            if (isNaN(startDate.getTime())) {
+                timeElement.textContent = '哎呀，时间设置好像有点问题哦~';
+                console.error("无效的日期格式:", siteStartDate); // 给懂技术的宝贝留个线索
                 return;
             }
 
-            // 把总秒数换算成天、小时、分钟和秒
-            const days = Math.floor(totalSeconds / 86400);
-            const hours = Math.floor((totalSeconds % 86400) / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
+            function updateRuntime() {
+                const nowDate = new Date();
+                const totalSeconds = Math.floor((nowDate - startDate) / 1000);
+                
+                if (totalSeconds < 0) {
+                    timeElement.innerHTML = "❤️ 网站即将上线，敬请期待...";
+                    return;
+                }
 
-            // 把结果拼成一句好看的话，宝贝也可以自己改文字和表情哦
-            timeElement.innerHTML = `⭐本站已运行: ${days}天${hours}小时${minutes}分${seconds}秒☁️`;
+                const days = Math.floor(totalSeconds / 86400);
+                const hours = Math.floor((totalSeconds % 86400) / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+
+                timeElement.innerHTML = `⭐本站已运行: ${days}天${hours}小时${minutes}分${seconds}秒☁️`;
+            }
+
+            // 立刻更新一次，然后每秒都更新
+            updateRuntime();
+            setInterval(updateRuntime, 1000);
+        } else {
+            // 如果找不到元素，也在控制台说一声
+            console.error("哎呀，没找到ID是 'runningtime' 的元素。");
         }
-
-        // 页面一加载好，就立刻执行一次，避免看到"加载中..."
-        updateRuntime();
-        
-        // 然后，每隔1秒钟（1000毫秒）就再执行一次，让时间一直走下去
-        setInterval(updateRuntime, 1000);
-    }
+    });
 </script>
 
