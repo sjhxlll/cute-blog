@@ -1,78 +1,31 @@
 ---
-// 这是全新的、强大的、带有“智能更新”和“绝对命令”的 Waline 评论组件！
+// 全新的、强大的、绝对听话的 Giscus 评论组件！
 ---
 
-<!-- 1. 这是 Waline 评论区要显示的位置 -->
-<div id="waline" class="mx-auto my-16 max-w-4xl px-4"></div>
-
-<!-- 2. 我们把所有魔法都集中在这个脚本里 -->
-<script is:inline>
-  // 我们在 window 这个“司令部”里，任命一个“总司令”来管理评论区
-  // 这样不管有多少克隆人，它们都听同一个总司令的
-  window.walineInstance = null;
-
-  // 这是“总司令”的作战计划，它现在更智能了！
-  const mountOrUpdateWaline = () => {
-    const walineEl = document.querySelector('#waline');
-    if (!walineEl) return; // 如果战场都找不到，就原地待命
-
-    // 准备好作战需要的所有物资（配置）
-    const walineOptions = {
-        el: '#waline',
-        // ↓↓↓ 请再次确认这里的地址是你自己的 Waline 服务器地址！ ↓↓↓
-        serverURL: 'https://your-waline-server.vercel.app',
-        path: window.location.pathname, // 动态获取当前文章的“身份证”
-        lang: 'zh-CN',
-        reaction: true,
-        pageview: true,
-        emoji: [
-          'https://unpkg.com/@waline/emojis@1.2.0/weibo',
-          'https://unpkg.com/@waline/emojis@1.2.0/bilibili',
-        ],
-        dark: 'html.dark',
-    };
-
-    // 智能判断：如果总司令已经有部队了，就命令他们更新阵地，而不是重新派兵
-    if (window.walineInstance) {
-        console.log("Waline: 发现现有部队，命令其更新阵地！");
-        window.walineInstance.update(walineOptions);
-    } else {
-        // 如果是第一场战斗，就派出全新的精锐部队
-        console.log("Waline: 派出全新部队占领阵地！");
-        // 动态加载 Waline 的脚本和样式
-        Promise.all([
-            import('https://unpkg.com/@waline/client@v3/dist/waline.js'),
-            new Promise(resolve => {
-                if (!document.querySelector('link[href*="waline.css"]')) {
-                    const link = document.createElement('link');
-                    link.rel = 'stylesheet';
-                    link.href = 'https://unpkg.com/@waline/client@v3/dist/waline.css';
-                    link.onload = resolve;
-                    document.head.appendChild(link);
-                } else {
-                    resolve();
-                }
-            })
-        ]).then(([{ init }]) => {
-            // 派出全新的部队，并任命总司令
-            window.walineInstance = init(walineOptions);
-        }).catch(e => console.error('加载或初始化 Waline 失败:', e));
-    }
-  };
-
-  // --- “总司令部”只下达一次命令，防止军队混乱！ ---
-  if (!window.walineListenersAdded) {
-    // 命令一：给“Swup动画大脑”下令，负责后续的页面切换！
-    document.addEventListener('swup:pageView', mountOrUpdateWaline);
-    
-    // 命令二：给“浏览器”下达最原始、最可靠的命令，负责第一次加载！
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', mountOrUpdateWaline);
-    } else {
-        // 如果错过了事件，就直接执行
-        mountOrUpdateWaline();
-    }
-    
-    window.walineListenersAdded = true;
-  }
-</script>
+<!-- 
+  我们给评论区一个家，让它在这里显示。
+  Giscus 很聪明，它会自动找到这个带有 'giscus' 类的家。
+-->
+<div class="giscus mx-auto my-16 max-w-4xl px-4">
+  <!-- 
+    这就是 Giscus 的全部魔法！
+    我们直接把你配置好的、独一无二的脚本放在这里。
+    它就像一个独立的“黑盒子”，自己就能处理好所有事情，
+    再也不会和我们那个“傲娇”的博客模板打架了！
+  -->
+  <script src="https://giscus.app/client.js"
+          data-repo="sjhxlll/Fuwari-comments"
+          data-repo-id="R_kgDOPQg7iA"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOPQg7iM4CtQj9"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
