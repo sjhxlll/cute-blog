@@ -1,14 +1,13 @@
 ---
-title: '我的第一个抱抱按钮！'
-description: '我用 Astro 和 Svelte 创造了一个超可爱的互动按钮，快来试试看！'
-pubDate: 'Jul 22 2025'
-heroImage: '/blog-placeholder-3.jpg'
+title: 7月22日mdx测试
+published: 2025-07-22
+description: mdx测试
+image: ./cover.png   # 如果有封面图，需要先把图片也传到这个目录下
+tags: [测试]
+category: 测试
+draft: false
 ---
 
-{/* 确保这一行就在 '---' 下面，并且引号是英文半角的直引号 ' ' 
-  这是正确的 -> '~/components/HugButton.svelte'
-  这是错误的 -> ’~/components/HugButton.svelte’ (注意引号是弯的)
-*/}
 import HugButton from '~/components/HugButton.svelte';
 
 耶！欢迎来到我的第一篇 MDX 文章！🎉
@@ -25,9 +24,3 @@ import HugButton from '~/components/HugButton.svelte';
   */}
   <HugButton client:load />
 </div>
-
-是不是超解压！
-
-每次点击，都是一次小小的自我肯定。希望这个小小的按钮，能给你带来一点点的温暖和快乐。就像你努力练马甲线、用心护肤一样，这些小小的坚持，最后都会让你变成闪闪发光的存在！
-
-继续加油哦，宝贝儿！你的可爱，值得被全世界看到！💖
