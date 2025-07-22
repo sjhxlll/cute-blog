@@ -1,25 +1,26 @@
-<head>
-  <!-- ... -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/@waline/client@v3/dist/waline.css"
-  />
-  <!-- ... -->
-</head>
-<body>
-  <!-- ... -->
-  <div id="waline"></div>
-  <script type="module">
-    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+<script type="module">
+  import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
 
-    init({
-      el: '#waline',
-      serverURL: 'https://my-waline-server-psi.vercel.app/',
-      emoji: [
+  init({
+    el: '#waline',
+    serverURL: 'https://my-waline-server-psi.vercel.app/', // 这是你的服务地址，保持不变
+    emoji: [
       '//unpkg.com/@waline/emojis@1.2.0/weibo',
       '//unpkg.com/@waline/emojis@1.2.0/bmoji',
-     ],
-    });
-
-  </script>
-</body>
+      '//unpkg.com/@waline/emojis@1.2.0/bilibili',
+      // 在这里加上我们准备好的颜文字！
+      {
+        name: '颜文字', // 选项卡的名称
+        icon: 'OωO',   // 选项卡的图标
+        items: [
+          "OωO", "|´・ω・)ノ", "ヾ(≧∇≦*)ゝ", "(☆ω☆)", "（╯‵□′）╯︵┴─┴",
+          "￣﹃￣", "(/ω＼)", "∠( ᐛ 」∠)＿", "(๑•̀ㅁ•́ฅ)", "→_→",
+          "୧(๑•̀⌄•́๑)૭", "٩(ˊᗜˋ*)و", "(ノ°ο°)ノ", "(´இ皿இ｀)", "⌇●﹏●⌇",
+          "(ฅ´ω`ฅ)", "(╯°A°)╯︵○○○", "φ(￣∇￣o)", "ヾ(´･ ･｀｡)ノ\"",
+          "( ง ᵒ̌皿ᵒ̌)ง⁼³₌₃", "(ó﹏ò｡)", "Σ(っ °Д °;)っ", "( ,,´･ω･)ﾉ\"(´っω･｀｡)",
+          "╮(╯▽╰)╭", "o(*////▽////*)q", "＞﹏＜", "( ๑´•ω•) \"(ㆆᴗㆆ)"
+        ]
+      }
+    ],
+  });
+</script>
