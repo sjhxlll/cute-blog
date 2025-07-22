@@ -1,4 +1,3 @@
-```mdx
 ---
 title: 7月22日mdx测试
 published: 2025-07-22
