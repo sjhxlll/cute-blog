@@ -1,14 +1,10 @@
 ---
-title: 我的第一篇 MDX 文章！
-published: 2025-07-22
-description: 我的第一篇 MDX 文章！
-// image: ./cover.png   # 如果有封面图，需要先把图片也传到这个目录下
-tags: [心情, 日记]
-category: 生活
-draft: false
-
-// 1. 在文章顶部，像写代码一样导入你刚刚创建的组件
-import TipBox from '../../components/TipBox.astro';
+title: '我的第一篇 MDX 文章！'
+pubDate: 2025-07-22
+description: '体验一下在文章里加组件的感觉，好棒！'
+published: true
+---
+import TipBox from '../../../components/TipBox.astro';
 
 # 欢迎来到我的新世界！
 
@@ -24,5 +20,3 @@ import TipBox from '../../components/TipBox.astro';
 <TipBox>
   嘻嘻，这是一个用 **MDX** 和 **Astro 组件** 实现的超可爱提示框！是不是感觉文章都变得生动起来了？你还可以在里面用 **Markdown** 语法哦！
 </TipBox>
-
-是不是超简单！你现在可以随心所欲地在文章任何地方使用 `<TipBox>` 了。
