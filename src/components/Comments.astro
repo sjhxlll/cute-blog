@@ -1,52 +1,49 @@
 ---
-// 这是评论区组件的终极版本，加入了双重保险！
+// 这是全新的、强大的 Waline 评论组件！
+const { lang } = Astro.props;
 ---
 
-<!-- 1. 引入 Valine 的核心脚本 -->
-<script src="https://unpkg.com/valine/dist/Valine.min.js"></script>
+<!-- 1. 引入 Waline 的样式和脚本 -->
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
+<script type="module">
+  import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
 
-<!-- 2. 这是 Valine 评论区要显示的位置 -->
-<div id="vcomments" class="mx-auto my-16 max-w-4xl px-4"></div>
-
-<!-- 
-  3. 初始化 Valine 的脚本。
-  我们现在监听两个信号：
-  - 'astro:page-load': 负责第一次打开页面时加载。
-  - 'swup:pageView': 负责在用动画切换页面后重新加载，这是专门对付这个模板的终极武器！
--->
-<script is:inline>
-  function initValine() {
-    // 秘密日志，帮我们看到代码有没有在运行
-    console.log("开始尝试召唤评论区...");
-
-    const el = document.querySelector('#vcomments');
-    if (!el) {
-      console.log("召唤失败：没找到安放评论区的#vcomments位置。");
-      return;
-    }
+  // 监听 Astro 的页面加载事件，确保每次翻页都能正确加载评论区
+  document.addEventListener('astro:page-load', () => {
+    const el = document.querySelector('#waline');
     
-    if (el.querySelector('.vwrap')) {
-      console.log("评论区已经在了，不用重复召唤。");
-      return;
+    // 如果页面上已经有 Waline 评论区，就先销毁旧的，防止重复
+    if (el && el.children.length > 0) {
+      // Waline v3 doesn't have a public destroy method exposed, 
+      // so we just clear the container.
+      el.innerHTML = '';
     }
-    
-    if (typeof Valine === 'function') {
-      console.log("找到了Valine魔法书，开始施法！");
-      new Valine({
-        el: '#vcomments',
-        appId: 'XVu5uGyeWQCUayGYC0wwlg1B-gzGzoHsz',
-        appKey: '2nw7sXBAhUf4SimNycb3lmoL',
-        placeholder: '有什么问题欢迎评论区留言~么么哒',
-        avatar: 'wavatar',
-        visitor: true,
+
+    // 如果页面上有 #waline 容器，就初始化一个新的 Waline 实例
+    if (el) {
+      init({
+        el: '#waline',
+        // ↓↓↓ 在这里粘贴你刚刚部署好的 Vercel 服务器地址！ ↓↓↓
+        serverURL: 'https://my-waline-server-psi.vercel.app/', 
+        
+        // --- 下面是一些个性化配置，你可以自己玩 ---
+        lang: 'zh-CN', // 语言
+        reaction: true, // 开启表情回应
+        pageview: true, // 开启阅读量统计
+        emoji: [ // 自定义表情
+          'https://unpkg.com/@waline/emojis@1.2.0/weibo',
+          'https://unpkg.com/@waline/emojis@1.2.0/alus',
+          'https://unpkg.com/@waline/emojis@1.2.0/bilibili',
+        ],
+        dark: 'html.dark', // 自动适应暗色模式
+        meta: ['nick', 'mail', 'link'], // 评论者需要填写的信息
+        requiredMeta: ['nick'], // 必填项
+        login: 'enable', // 登录模式
+        wordLimit: 300, // 字数限制
       });
-      console.log("施法完毕！");
-    } else {
-      console.log("召唤失败：Valine魔法书还没送到。");
     }
-  }
-
-  // 双重保险！同时监听两个信号！
-  document.addEventListener('astro:page-load', initValine);
-  document.addEventListener('swup:pageView', initValine);
+  });
 </script>
+
+<!-- 2. 这是 Waline 评论区要显示的位置 -->
+<div id="waline" class="mx-auto my-16 max-w-4xl px-4"></div>
