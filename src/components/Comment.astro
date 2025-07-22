@@ -1,27 +1,60 @@
 ---
+// src/components/Comment.astro
+
 interface Props {
 	path: string;
 }
 
-const config = {
-	el: "#comment",
-	path: Astro.props.path,
-};
+const { path } = Astro.props;
 ---
 
-<div id="comment"></div>
-<script is:inline defer define:vars={{ config }}>
-	function loadTwikoo() {
-		const script = document.createElement("script");
-		script.src = "https://registry.npmmirror.com/twikoo/1.6.44/files/dist/twikoo.min.js"
-		script.onload = () => {
-			twikoo.init({
-				...config,
-				envId: "https://twikoo.aidoi.top",
-				lang: "zh-CN",
-			});
-		};
-		document.body.appendChild(script);
-	}
-	document.addEventListener("loadComment", loadTwikoo, { once: true });
+<div id="twikoo-container" class="twikoo"></div>
+
+<script define:vars={{ envId: "https://twikoo.aidoi.top", path: path }}>
+	// 获取评论区的容器元素
+	const twikooContainer = document.getElementById('twikoo-container');
+
+	// 创建一个哨兵 (IntersectionObserver)
+	const observer = new IntersectionObserver((entries) => {
+		// 当哨兵观察到评论区容器进入屏幕时
+		if (entries[0].isIntersecting) {
+			
+			// 嘿！看到你了！马上加载评论区~
+			// 先把哨兵撤掉，不然每次看到都会加载一次哦
+			observer.disconnect();
+
+			// 创建 script 标签来加载 Twikoo 的核心JS文件
+			const script = document.createElement('script');
+			// 我帮你换成了一个更稳定快速的 CDN 地址~
+			script.src = 'https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js';
+			
+			// 当JS加载完成后，执行初始化
+			script.onload = () => {
+				twikoo.init({
+					envId: envId, // 这是从 define:vars 传进来的后端地址
+					el: '#twikoo-container', // 告诉 Twikoo 在哪里显示
+					path: path,   // 这是从 define:vars 传进来的文章路径
+					lang: 'zh-CN',
+				});
+			};
+			
+			// 把 script 标签添加到页面上，开始加载
+			document.body.appendChild(script);
+		}
+	}, {
+		// 这是我的一个小巧思哦！意思是当访客的屏幕离评论区底部还有 200px 的时候，
+		// 我们就悄悄提前开始加载了，这样他滑到那里的时候，
+		// 评论区“咻”一下就出现了，体验感超级棒！
+		rootMargin: '0px 0px 200px 0px' 
+	});
+
+	// 命令哨兵开始观察评论区容器！
+	observer.observe(twikooContainer);
 </script>
+
+<style>
+/* 也可以在这里加一些Twikoo的自定义样式哦 */
+.twikoo {
+    min-height: 200px; /* 给一个最小高度，防止页面抖动 */
+}
+</style>
