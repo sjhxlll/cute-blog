@@ -1,0 +1,28 @@
+---
+// src/components/TipBox.astro
+// 这里可以定义组件接收的参数，但我们先做一个最简单的
+---
+<div class="tip-box">
+  <span class="icon">💡</span>
+  <div class="content">
+    <slot /> </div>
+</div>
+
+<style>
+  .tip-box {
+    background-color: #eef2fe; /* 淡蓝色背景 */
+    border-left: 5px solid #60a5fa; /* 蓝色左边框 */
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .icon {
+    font-size: 1.5rem;
+  }
+  .content {
+    color: #374151;
+  }
+</style>
