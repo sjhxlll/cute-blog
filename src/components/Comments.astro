@@ -1,6 +1,5 @@
 ---
-// 这是全新的、强大的 Waline 评论组件！
-const { lang } = Astro.props;
+// 这是全新的、强大的、带有双重保险的 Waline 评论组件！
 ---
 
 <!-- 1. 引入 Waline 的样式和脚本 -->
@@ -8,41 +7,54 @@ const { lang } = Astro.props;
 <script type="module">
   import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
 
-  // 监听 Astro 的页面加载事件，确保每次翻页都能正确加载评论区
-  document.addEventListener('astro:page-load', () => {
+  function initializeWaline() {
+    // 秘密日志，帮我们看到代码有没有在运行
+    console.log("Waline: 监听到页面加载信号，准备召唤评论区...");
     const el = document.querySelector('#waline');
+
+    if (!el) {
+      console.error("Waline 错误: 没找到安放评论区的 #waline 位置。");
+      return;
+    }
     
-    // 如果页面上已经有 Waline 评论区，就先销毁旧的，防止重复
-    if (el && el.children.length > 0) {
-      // Waline v3 doesn't have a public destroy method exposed, 
-      // so we just clear the container.
-      el.innerHTML = '';
+    // 检查 Waline 是否已经渲染，防止重复加载
+    if (el.hasChildNodes() && el.innerHTML.includes('wl-root')) {
+        console.log("Waline: 评论区已经在了，无需重复召唤。");
+        return;
     }
 
-    // 如果页面上有 #waline 容器，就初始化一个新的 Waline 实例
-    if (el) {
+    // 确保容器是空的
+    el.innerHTML = '';
+
+    try {
+      console.log("Waline: 开始初始化...");
       init({
         el: '#waline',
-        // ↓↓↓ 在这里粘贴你刚刚部署好的 Vercel 服务器地址！ ↓↓↓
-        serverURL: 'https://my-waline-server-psi.vercel.app/', 
+        // ↓↓↓ 请再次确认这里的地址是你自己的 Waline 服务器地址！ ↓↓↓
+        serverURL: 'https://your-waline-server.vercel.app', 
         
-        // --- 下面是一些个性化配置，你可以自己玩 ---
-        lang: 'zh-CN', // 语言
-        reaction: true, // 开启表情回应
-        pageview: true, // 开启阅读量统计
-        emoji: [ // 自定义表情
+        // --- 个性化配置 ---
+        lang: 'zh-CN',
+        reaction: true,
+        pageview: true,
+        emoji: [
           'https://unpkg.com/@waline/emojis@1.2.0/weibo',
-          'https://unpkg.com/@waline/emojis@1.2.0/alus',
           'https://unpkg.com/@waline/emojis@1.2.0/bilibili',
         ],
-        dark: 'html.dark', // 自动适应暗色模式
-        meta: ['nick', 'mail', 'link'], // 评论者需要填写的信息
-        requiredMeta: ['nick'], // 必填项
-        login: 'enable', // 登录模式
-        wordLimit: 300, // 字数限制
+        dark: 'html.dark',
       });
+      console.log("Waline: 初始化成功！");
+    } catch (e) {
+      console.error("Waline: 初始化时发生致命错误:", e);
     }
-  });
+  }
+
+  // --- 双重保险！---
+  // 监听 Astro 自己的页面加载事件
+  document.addEventListener('astro:page-load', initializeWaline);
+  // 监听 Swup 动画库的页面切换事件，这是专门对付这个模板的终极武器！
+  document.addEventListener('swup:pageView', initializeWaline);
+
 </script>
 
 <!-- 2. 这是 Waline 评论区要显示的位置 -->
