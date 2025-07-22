@@ -11,6 +11,7 @@
       }
     ],
     "paths": {
+      "~/*": ["src/*"], // 我帮你把这个新暗号加上啦！
       "@components/*": ["src/components/*"],
       "@assets/*": ["src/assets/*"],
       "@constants/*": ["src/constants/*"],
@@ -18,7 +19,9 @@
       "@i18n/*": ["src/i18n/*"],
       "@layouts/*": ["src/layouts/*"],
       "@/*": ["src/*"]
-    }
+    },
+    "jsx": "preserve",
+    "jsxImportSource": "svelte"
   },
   "include": ["src/**/*"]
 }
