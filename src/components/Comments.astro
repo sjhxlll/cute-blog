@@ -1,27 +1,61 @@
 ---
+// 这是全新的、强大的、绝对听话的 Twikoo 评论组件！
+
+// 我们告诉这个组件，它需要从外面接收一个“身份证”，也就是文章的路径
 interface Props {
 	path: string;
 }
+const { path } = Astro.props;
 
-const config = {
-	el: "#comment",
-	path: Astro.props.path,
+// 这是我们要传递给 Twikoo 的配置信息
+const twikooOptions = {
+	el: '#twikoo-comment',
+	// 我们把你自己的 Twikoo 服务器地址填在这里
+	// 注意：https://twikoo.aidoi.top 是别人的，你需要部署自己的哦！
+	envId: "https://twikoo.aidoi.top", 
+	lang: "zh-CN",
+	// 把从外面接收到的“身份证”交给 Twikoo，让它知道这是哪篇文章
+	path: path, 
 };
 ---
 
-<div id="comment"></div>
-<script is:inline defer define:vars={{ config }}>
-	function loadTwikoo() {
+<!-- 1. 这是 Twikoo 评论区要显示的位置 -->
+<div id="twikoo-comment" class="mx-auto my-16 max-w-4xl px-4"></div>
+
+<!-- 2. 我们把所有魔法都集中在这个脚本里 -->
+<script is:inline define:vars={{ options: twikooOptions }}>
+	// 我们在 window 这个“司令部”里，任命一个“总司令”来管理评论区
+	window.twikooInstance = null;
+
+	// 这是“总司令”的作战计划
+	const mountTwikoo = () => {
+		const twikooEl = document.querySelector(options.el);
+		if (!twikooEl) return; // 如果战场都找不到，就原地待命
+
+		// 动态加载 Twikoo 的脚本
 		const script = document.createElement("script");
-		script.src = "https://cdnjs.cloudflare.com/ajax/libs/twikoo/1.6.44/twikoo.min.js"
+		script.src = "https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js"; // 使用一个更稳定的CDN地址
+		
 		script.onload = () => {
-			twikoo.init({
-				...config,
-				envId: "https://twikoo.aidoi.top",
-				lang: "zh-CN",
-			});
+			// 脚本加载成功后，开始初始化
+			if (window.twikoo) {
+				// 如果已经有部队了，就命令他们光荣退役
+				if (window.twikooInstance) {
+					window.twikooInstance.destroy();
+				}
+				// 派出全新的部队，并任命总司令
+				window.twikooInstance = twikoo.init(options);
+			}
 		};
-		document.body.appendChild(script);
+		
+		// 把脚本添加到页面上，开始加载
+		document.head.appendChild(script);
+	};
+
+	// --- “总司令部”只下达一次命令，防止军队混乱！ ---
+	if (!window.twikooListenersAdded) {
+		document.addEventListener('astro:page-load', mountTwikoo);
+		document.addEventListener('swup:pageView', mountTwikoo);
+		window.twikooListenersAdded = true;
 	}
-	document.addEventListener("loadComment", loadTwikoo, { once: true });
 </script>
