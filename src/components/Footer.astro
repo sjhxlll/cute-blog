@@ -1,13 +1,29 @@
 ---
+// --- 前端配置区 ---
+// 这里是页面的“大脑”，我们在这里准备好需要用到的信息
+
 import { profileConfig } from '../config'
 import { url } from '../utils/url-utils'
+
+// 获取当前年份，让版权信息永远都是最新的
 const currentYear = new Date().getFullYear()
+
+// 宝贝！把你的网站开始运行的日期和时间放在这里哦
+// 格式是 "月/日/年 时:分:秒"，比如 "07/21/2025 16:58:58"
+// 以后想改的话，直接在这里改就好啦，超级方便！
+const siteStartDate = "07/21/2025 16:58:58";
 ---
 
-<!--<div class="border-t border-[var(&#45;&#45;primary)] mx-16 border-dashed py-8 max-w-[var(&#45;&#45;page-width)] flex flex-col items-center justify-center px-6">-->
+<!-- --- 页面显示区 --- -->
+<!-- 这里是页面的“身体”，也就是我们看到的样子 -->
+
+<!-- 分割线，让页面布局更清晰~ -->
 <div class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32"></div>
-<!--<div class="transition bg-[oklch(92%_0.01_var(&#45;&#45;hue))] dark:bg-black rounded-2xl py-8 mt-4 mb-8 flex flex-col items-center justify-center px-6">-->
+
+<!-- 这是整个页脚的大容器 -->
 <div class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6">
+    
+    <!-- 版权和链接信息 -->
     <div class="transition text-50 text-sm text-center">
         &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. All Rights Reserved. /
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('rss.xml')}>RSS</a> /
@@ -17,9 +33,58 @@ const currentYear = new Date().getFullYear()
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://astro.build">Astro</a> &
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a>
         <br>
-        <a class="transition link text-[var(--primary)] font-medium" + target="_blank" href="https://beian.miit.gov.cn/"> 
-          萌次元备537555号-1</a>   
+        <!-- 修正了一个小小的语法问题，让链接正常工作 -->
+        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://beian.miit.gov.cn/"> 
+          萌次元备537555号-1
+        </a>   
     </div>
-    <script type="text/javascript">function runtime(){const t=new Date("07/21/2025 16:58:58"),n=new Date,s=n-t,e=Math.floor(s/1e3),o=Math.floor(e/86400),i=Math.floor(e%86400/3600),a=Math.floor(e%3600/60),r=e%60;document.getElementById("runningtime").innerHTML=`⭐本站已运行: ${o}天${i}小时${a}分${r}秒 ☁️`}setInterval(runtime,1e3)</script>
-    <div class="transition text-50 text-sm text-center"><p id="runningtime"> </p></div>
+
+    <!-- 显示网站运行时间的段落 -->
+    <div class="transition text-50 text-sm text-center mt-2">
+        <p id="runningtime">正在加载运行时间...</p>
+    </div>
 </div>
+
+<!-- --- 魔法脚本区 --- -->
+<!-- 这段脚本会让时间动起来！ -->
+<script define:vars={{ siteStartDate }}>
+    // 找到要显示时间的那个元素
+    const timeElement = document.getElementById("runningtime");
+
+    // 确认一下我们找到了这个元素
+    if (timeElement) {
+        // 把我们之前设置的开始时间字符串，变成一个真正的日期对象
+        const startDate = new Date(siteStartDate);
+
+        // 创建一个函数，专门用来更新时间显示
+        function updateRuntime() {
+            // 获取现在的日期和时间
+            const nowDate = new Date();
+            
+            // 计算从开始到现在，一共过去了多少秒
+            const totalSeconds = Math.floor((nowDate - startDate) / 1000);
+            
+            // 如果时间还没到，就显示一个可爱的小提示
+            if (totalSeconds < 0) {
+                timeElement.innerHTML = "❤️ 网站即将上线，敬请期待...";
+                return;
+            }
+
+            // 把总秒数换算成天、小时、分钟和秒
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = Math.floor((totalSeconds % 86400) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            // 把结果拼成一句好看的话，宝贝也可以自己改文字和表情哦
+            timeElement.innerHTML = `⭐本站已运行: ${days}天${hours}小时${minutes}分${seconds}秒☁️`;
+        }
+
+        // 页面一加载好，就立刻执行一次，避免看到"加载中..."
+        updateRuntime();
+        
+        // 然后，每隔1秒钟（1000毫秒）就再执行一次，让时间一直走下去
+        setInterval(updateRuntime, 1000);
+    }
+</script>
+
