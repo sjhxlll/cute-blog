@@ -1,5 +1,5 @@
 ---
-// 这是全新的、强大的、带有“强制命令”的 Waline 评论组件！
+// 这是全新的、强大的、带有“强制命令”和“自动穿衣”功能的 Waline 评论组件！
 ---
 
 <!-- 1. 这是 Waline 评论区要显示的位置 -->
@@ -12,6 +12,16 @@
     // 先检查一下，如果评论区已经在了，就不用重复召唤了
     if (document.querySelector('#waline .wl-root')) {
       return;
+    }
+
+    // --- 魔法在这里！我们先给它穿上衣服！---
+    // 检查一下是不是已经穿过衣服了，没有的话就穿上
+    if (!document.querySelector('link[href*="waline.css"]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://unpkg.com/@waline/client@v3/dist/waline.css';
+      document.head.appendChild(link);
+      console.log("Waline: 已为评论区穿上新衣服！");
     }
 
     // 动态加载 Waline 的脚本，这样最灵活
