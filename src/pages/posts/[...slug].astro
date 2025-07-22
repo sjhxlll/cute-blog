@@ -13,7 +13,7 @@ import ImageWrapper from "../../components/misc/ImageWrapper.astro";
 import PostMetadata from "../../components/PostMeta.astro";
 import { profileConfig, siteConfig } from "../../config";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
-import Comments from "@components/Comments.astro"; // <-- 1. 在这里引入我们的评论组件
+import Comment from "@components/Comment.astro"; // <-- 1. 在这里引入我们的评论组件
 
 export async function getStaticPaths() {
 	const blogEntries = await getSortedPosts();
@@ -112,29 +112,28 @@ const jsonLd = {
 		</div>
 	</div>
 
-    <!-- 2. 把评论组件放在这里！就在文章主体和“上一篇/下一篇”导航的中间 -->
-    <Comments />
+    <div class="flex flex-col md:flex-row justify-between mb-4 gap-4 overflow-hidden w-full">
+        <a href={entry.data.nextSlug ? getPostUrlBySlug(entry.data.nextSlug) : "#"}
+           class:list={["w-full font-bold overflow-hidden active:scale-95", {"pointer-events-none": !entry.data.nextSlug}]}>
+            {entry.data.nextSlug && <div class="btn-card rounded-2xl w-full h-[3.75rem] max-w-full px-4 flex items-center !justify-start gap-4" >
+                <Icon name="material-symbols:chevron-left-rounded" class="text-[2rem] text-[var(--primary)]" />
+                <div class="overflow-hidden transition overflow-ellipsis whitespace-nowrap max-w-[calc(100%_-_3rem)] text-black/75 dark:text-white/75">
+                    {entry.data.nextTitle}
+                </div>
+            </div>}
+        </a>
 
-	<div class="flex flex-col md:flex-row justify-between mb-4 gap-4 overflow-hidden w-full">
-		<a href={entry.data.nextSlug ? getPostUrlBySlug(entry.data.nextSlug) : "#"}
-			class:list={["w-full font-bold overflow-hidden active:scale-95", {"pointer-events-none": !entry.data.nextSlug}]}>
-			{entry.data.nextSlug && <div class="btn-card rounded-2xl w-full h-[3.75rem] max-w-full px-4 flex items-center !justify-start gap-4" >
-				<Icon name="material-symbols:chevron-left-rounded" class="text-[2rem] text-[var(--primary)]" />
-				<div class="overflow-hidden transition overflow-ellipsis whitespace-nowrap max-w-[calc(100%_-_3rem)] text-black/75 dark:text-white/75">
-					{entry.data.nextTitle}
-				</div>
-			</div>}
-		</a>
-
-		<a href={entry.data.prevSlug ? getPostUrlBySlug(entry.data.prevSlug) : "#"}
-			class:list={["w-full font-bold overflow-hidden active:scale-95", {"pointer-events-none": !entry.data.prevSlug}]}>
-			{entry.data.prevSlug && <div class="btn-card rounded-2xl w-full h-[3.75rem] max-w-full px-4 flex items-center !justify-end gap-4">
-				<div class="overflow-hidden transition overflow-ellipsis whitespace-nowrap max-w-[calc(100%_-_3rem)] text-black/75 dark:text-white/75">
-					{entry.data.prevTitle}
-				</div>
-				<Icon name="material-symbols:chevron-right-rounded" class="text-[2rem] text-[var(--primary)]" />
-			</div>}
-		</a>
-	</div>
+        <a href={entry.data.prevSlug ? getPostUrlBySlug(entry.data.prevSlug) : "#"}
+           class:list={["w-full font-bold overflow-hidden active:scale-95", {"pointer-events-none": !entry.data.prevSlug}]}>
+            {entry.data.prevSlug && <div class="btn-card rounded-2xl w-full h-[3.75rem] max-w-full px-4 flex items-center !justify-end gap-4">
+                <div class="overflow-hidden transition overflow-ellipsis whitespace-nowrap max-w-[calc(100%_-_3rem)] text-black/75 dark:text-white/75">
+                    {entry.data.prevTitle}
+                </div>
+                <Icon name="material-symbols:chevron-right-rounded" class="text-[2rem] text-[var(--primary)]" />
+            </div>}
+        </a>
+    </div>
+    
+    <div class="card-base p-6 mb-4"><Comment path={`/posts/${entry.slug}`} /></div>
 
 </MainGridLayout>
