@@ -17,6 +17,7 @@ Hello World! 我是小可爱！
 
 2025-07-23
 已经有了音乐播放器、友链、评论区了。
+
 <TipBox>
-    md也已经升级成了mdx。
+  md也已经升级成了mdx。
 </TipBox>
