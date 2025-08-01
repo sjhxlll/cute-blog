@@ -161,21 +161,22 @@ const bannerOffset =
 
             function redirectToOfficialSite() {
                 // ！！！重要！！！
-                // TODO: 把下面的16进制字符串换成你自己的【完整】主页链接, 比如 'https://www.xomoe.cn'       
+                // TODO: 把下面的16进制字符串换成【完整】主页链接, 比如 'https://www.xomoe.cn'       
                 const official = fromHex('68747470733a2f2f7777772e786f6d6f652e636e');
                 window.location.href = official;
             }
 
             // ！！！重要！！！
             // TODO: 把下面列表里的域名换成你自己的【白名单】域名，localhost建议保留用于本地开发
-            // 使用 toHex('你的域名.com') 来生成
             const encodedDomains = [
-                // 示例：xeonzilla.top
+                // 示例：xomoe.cn
                 '786f6d6f652e636e',                 
-                // 示例：www.xeonzilla.top
+                // 示例：www.xomoe.cn
                 '7777772e786f6d6f652e636e',
                 // 本地开发环境, 建议保留
                 '6c6f63616c686f7374',
+				// cute-blog-blue.vercel.app
+				'637574652d626c6f672d626c75652e76657263656c2e617070'
             ];
 
             const rawHost = window.location.host;
@@ -208,6 +209,7 @@ const bannerOffset =
     <slot />
 
     <div id="page-height-extend" class="hidden h-[300vh]"></div>
+	<a href="/honey-trap-do-not-enter" style="display:none; visibility:hidden;" aria-hidden="true" tabindex="-1"></a>
 </body>
 </html>
 
