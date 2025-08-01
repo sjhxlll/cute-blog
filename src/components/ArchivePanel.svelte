@@ -38,8 +38,8 @@ function formatDate(date: Date) {
         day: '2-digit',
         hour: '2-digit',
         minute: '2-digit',
-        hour12: false // 24小时制
-        timeZone: 'UTC'
+        hour12: false , // 24小时制
+        timeZone: 'UTC' 
     });
 }
 
