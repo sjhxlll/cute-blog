@@ -92,6 +92,9 @@ onMount(async () => {
 </script>
 
 <div class="card-base px-8 py-6">
+    <div class="text-right text-xs text-75/50 mb-4">
+        时间标准: CST (UTC+8)
+    </div>
     {#each groups as group}
         <div>
             <div class="flex flex-row w-full items-center h-[3.75rem]">
