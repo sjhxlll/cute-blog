@@ -32,9 +32,14 @@ interface Group {
 let groups: Group[] = [];
 
 function formatDate(date: Date) {
-	const month = (date.getMonth() + 1).toString().padStart(2, "0");
-	const day = date.getDate().toString().padStart(2, "0");
-	return `${month}-${day}`;
+    // 使用 toLocaleString 来获取更详细的时间
+    return date.toLocaleString('zh-CN', { // 'zh-CN' 会显示成中文格式，你也可以换成 'sv-SE' 变成 'YYYY-MM-DD HH:mm' 格式
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false // 24小时制
+    });
 }
 
 function formatTag(tagList: string[]) {
