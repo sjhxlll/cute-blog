@@ -1,38 +1,28 @@
-{/* 文件路径：src/components/Comment.astro */}
+<head>
+  <!-- ... -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/@waline/client@v3/dist/waline.css"
+  />
+  <!-- ... -->
+</head>
+<body>
+  <!-- ... -->
+  <div id="waline"></div>
+  <script type="module">
+    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
 
-{/* 这里是你的组件的 HTML 结构，
-  Waline 需要一个 id 为 "waline" 的 div 来挂载评论区。
-*/}
-<div id="waline"></div>
-
-
-{/*
-  这里是 Waline 的客户端脚本，
-  负责初始化评论区，让它显示出来并能工作。
-  你的 serverURL 和 emoji 配置都保留在这里。
-*/}
-<script type="module">
-  import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
-
-  init({
-    el: '#waline',
-    serverURL: 'https://waline.xomoe.cn',
-    // 设置 emoji 为微博,哔哩小黄脸,qq
+    init({
+      el: '#waline',
+      serverURL: 'https://waline.xomoe.cn',
+	      // 设置 emoji 为微博与哔哩小黄脸
     emoji: [
       '//unpkg.com/@waline/emojis@1.2.0/weibo',
       '//unpkg.com/@waline/emojis@1.2.0/bmoji',
-      '//unpkg.com/@waline/emojis@1.2.0/qq',
-    ],
+	  '//unpkg.com/@waline/emojis@1.2.0/qq',
+	],
   });
-</script>
-
-
-{/*
-  ✨✨✨ 看这里！这就是我们新增的魔法 ✨✨✨
-  我们用 <style is:global> 来定义全局样式，
-  覆盖 Waline 的默认 CSS 变量。
-*/}
-<style is:global>
+  </script>
   /* --- 方案一：奶蓝色的小情书 --- */
   :root {
     /* 主题色换成了温柔的奶蓝色 */
@@ -66,3 +56,4 @@
     --waline-color: #bdc3c7;
   }
 </style>
+</body>
