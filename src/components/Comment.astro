@@ -15,6 +15,11 @@
     init({
       el: '#waline',
       serverURL: 'https://waline.xomoe.cn',
-    });
+	      // 设置 emoji 为微博与哔哩小黄脸
+    emoji: [
+      '//unpkg.com/@waline/emojis@1.2.0/weibo',
+      '//unpkg.com/@waline/emojis@1.2.0/bmoji',
+	],
+  });
   </script>
 </body>
