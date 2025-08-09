@@ -27,7 +27,7 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-    site: "https://www.xomoe.cn",
+    site: "https://www.xxmoe.com",
     base: "/",
     trailingSlash: "always",
     integrations: [
