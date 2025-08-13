@@ -161,8 +161,8 @@ const bannerOffset =
 
             function redirectToOfficialSite() {
                 // ！！！重要！！！
-                // TODO: 把下面的16进制字符串换成【完整】主页链接, 比如 'https://blog.xxmoe.com'       
-                const official = fromHex('68747470733a2f2f626c6f672e78786d6f652e636f6d');
+                // TODO: 把下面的16进制字符串换成【完整】主页链接, 比如 'https://blog.xomoe.cn'       
+                const official = fromHex('68747470733a2f2f626c6f672e786f6d6f652e636e');
                 window.location.href = official;
             }
 
@@ -172,6 +172,9 @@ const bannerOffset =
                 // 示例：xxmoe.com
                 '78786d6f652e636f6d',   
                 '626c6f672e78786d6f652e636f6d',
+                // 示例：xomoe.cn
+                '626c6f672e786f6d6f652e636e'
+
                 // 本地开发环境, 建议保留
                 //fastly
                 '666173746c792d626c6f672e78786d6f652e636f6d',
