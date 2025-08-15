@@ -57,7 +57,7 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Friends,  
 		{
 			name: "聚合",
-			url: "https://nav.xxmoe.com/", // Internal links should not include the base path, as it is automatically added
+			url: "https://nav.xomoe.cn/", // Internal links should not include the base path, as it is automatically added
 			external: true, // Show an external link icon and will open in a new tab
 		},
 	],
